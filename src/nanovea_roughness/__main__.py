@@ -1,3 +1,31 @@
+r"""*Main execution module for* ``nanovea_roughness``.
+
+``nanovea_roughness`` is a tool for automatically carrying out
+surface roughness calculations on Nanovea ST-400 profilometry scan
+data exports.
+
+**Author**
+    Brian Skinn (bskinn@alum.mit.edu)
+
+**File Created**
+    11 Sep 2020
+
+**Copyright**
+    \(c) Brian Skinn 2020
+
+**Source Repository**
+    http://www.github.com/bskinn/nanovea-roughness
+
+**Documentation**
+    http://sphobjinv.readthedocs.io
+
+**License**
+    The MIT License; see |license_txt|_ for full license terms
+
+**Members**
+
+"""
+
 import os
 from pathlib import Path
 from time import strftime
@@ -5,14 +33,14 @@ from time import strftime
 import openpyxl as opxl
 from tqdm import tqdm
 
-from nanovea_roughness.core import (
+from nanovea_roughness import (
     NanoveaData,
-    nanovea_data_from_scanfile,
-    Sa_calc as Sa,
-    Sp_calc as Sp,
-    Sq_calc as Sq,
-    Sv_calc as Sv,
-    Sz_calc as Sz,
+    nanovea_data_from_scanpath,
+    Sa,
+    Sp,
+    Sq,
+    Sv,
+    Sz,
 )
 
 
@@ -30,7 +58,7 @@ def main():
 
     for fpath in tqdm([p for p in base_path.iterdir() if p.suffix == ".txt"]):
         try:
-            data = nanovea_data_from_scanfile(fpath)[NanoveaData.ZData]
+            data = nanovea_data_from_scanpath(fpath)[NanoveaData.ZData]
             ws.append([fpath.name, Sa(data), Sz(data), Sq(data), Sp(data), Sv(data)])
         except Exception as e:
             ws.append([fpath.name, f"(processing failed: {e.__class__})"])

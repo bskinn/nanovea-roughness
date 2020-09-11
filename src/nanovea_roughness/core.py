@@ -1,3 +1,31 @@
+r"""*Core package code for* ``nanovea_roughness``.
+
+``nanovea_roughness`` is a tool for automatically carrying out
+surface roughness calculations on Nanovea ST-400 profilometry scan
+data exports.
+
+**Author**
+    Brian Skinn (bskinn@alum.mit.edu)
+
+**File Created**
+    11 Sep 2020
+
+**Copyright**
+    \(c) Brian Skinn 2020
+
+**Source Repository**
+    http://www.github.com/bskinn/nanovea-roughness
+
+**Documentation**
+    http://sphobjinv.readthedocs.io
+
+**License**
+    The MIT License; see |license_txt|_ for full license terms
+
+**Members**
+
+"""
+
 import csv
 import itertools as itt
 from enum import Enum
@@ -17,7 +45,7 @@ class NanoveaData(Enum):
     ZData = "zdata"
 
 
-def nanovea_data_from_scanfile(fpath):
+def nanovea_data_from_scanpath(fpath):
     """Load a Nanovea data file and return structured contents."""
     with fpath.open("r") as f:
         # Create a CSV reader from the indicated file.
