@@ -1,1 +1,1 @@
-from neutrino_polzn.core import NeutrinoPolzn
+from nanovea_roughness.__main__ import main

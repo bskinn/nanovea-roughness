@@ -156,8 +156,6 @@ def Sa_calc(arr):
     
     Sa is the mean of the absolute residuals relative to the fitted surface.
     
-    x and y are the 1-D arrays spanning the domain of the dataset, NOT the 2-D meshgrid arrays.
-    
     ASSUMES x- and y-spacings are (possibly different) CONSTANTS.
     
     Function is nan-safe.
@@ -168,12 +166,10 @@ def Sa_calc(arr):
     return simps(simps(np.nan_to_num(np.abs(resids)))) / np.sum(np.isfinite(resids))
 
 
-def Sq_calc(arr, x, y, **kwargs):
-    """Calculate the Sq of the given array.
+def Sq_calc(arr):
+    """Calculate the Sq of the given array over a best-fit plane.
     
     Sq is the RMS value of the residuals relative to the fitted surface.
-    
-    x and y are the 1-D arrays spanning the domain of the dataset, NOT the 2-D meshgrid arrays.
     
     ASSUMES x- and y-spacings are (possibly different) CONSTANTS.
     
@@ -185,13 +181,11 @@ def Sq_calc(arr, x, y, **kwargs):
     return np.sqrt(np.nansum(resids ** 2.0) / np.sum(np.isfinite(resids)))
 
 
-def Sz_calc(arr, x, y, **kwargs):
-    """Calculate the Sz of the given array.
+def Sz_calc(arr):
+    """Calculate the Sz of the given array over a best-fit plane.
     
     Sz is the difference between the maximum and minimum signed residuals
     relative to the fitted surface.
-    
-    x and y are the 1-D arrays spanning the domain of the dataset, NOT the 2-D meshgrid arrays.
     
     ASSUMES x- and y-spacings are (possibly different) CONSTANTS.
     
@@ -203,12 +197,10 @@ def Sz_calc(arr, x, y, **kwargs):
     return np.nanmax(resids) - np.nanmin(resids)
 
 
-def Sp_calc(arr, x, y, **kwargs):
-    """Calculate the Sp of the given array.
+def Sp_calc(arr):
+    """Calculate the Sp of the given array over a best-fit plane.
     
     Sp is the maximum signed residual relative to the fitted surface.
-    
-    x and y are the 1-D arrays spanning the domain of the dataset, NOT the 2-D meshgrid arrays.
     
     ASSUMES x- and y-spacings are (possibly different) CONSTANTS.
     
@@ -220,12 +212,10 @@ def Sp_calc(arr, x, y, **kwargs):
     return np.nanmax(resids)
 
 
-def Sv_calc(arr, x, y, **kwargs):
-    """Calculate the Sv of the given array.
+def Sv_calc(arr):
+    """Calculate the Sv of the given array over a best-fit plane.
     
     Sv is the absolute value of the most-negative residual relative to the fitted surface.
-    
-    x and y are the 1-D arrays spanning the domain of the dataset, NOT the 2-D meshgrid arrays.
     
     ASSUMES x- and y-spacings are (possibly different) CONSTANTS.
     

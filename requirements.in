@@ -1,0 +1,5 @@
+black
+numpy~=1.19
+openpyxl==3.0.5
+scipy~=1.5
+tqdm==4.48.2
