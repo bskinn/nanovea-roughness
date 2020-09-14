@@ -39,6 +39,8 @@ from scipy.optimize import minimize
 
 
 class NanoveaData(Enum):
+    """Enum for the various data fields emitted from scan data import."""
+    
     Filename = "fname"
     Counts = "counts"
     Incs = "incs"
@@ -103,21 +105,19 @@ def nanovea_data_from_scanpath(fpath):
         zgrid = arr[:, 2].reshape((xct, yct), order="F")
 
     # At this point, -1 values are replaced with nan,
-    # and the x-coordinate increases along axis=0.
+    # leaving the x-coordinate increasing along axis=0.
     # This is for semantic consistency with x corresponding
     # to the first axis of the array, even though that means
     # the x-coordinate runs down the screen when the ndarray
     # is print()'ed
     zgrid[zgrid == -1] = np.nan
 
-    out_d = {
+    return {
         NanoveaData.Filename: fpath.name,
         NanoveaData.Counts: [xct, yct],
         NanoveaData.Incs: [xinc, yinc],
         NanoveaData.ZData: zgrid,
     }
-
-    return out_d
 
 
 # #####  PLANE RESIDUALS CALCULATION  #####
@@ -233,7 +233,7 @@ def Sz_calc(arr):
 def Sp_calc(arr):
     """Calculate the Sp of the given array over a best-fit plane.
 
-    Sp is the maximum signed residual relative to the fitted surface.
+    Sp ('p' for "peak") is the maximum signed residual relative to the fitted surface.
 
     ASSUMES x- and y-spacings are (possibly different) CONSTANTS.
 
@@ -248,7 +248,7 @@ def Sp_calc(arr):
 def Sv_calc(arr):
     """Calculate the Sv of the given array over a best-fit plane.
 
-    Sv is the absolute value of the most-negative residual relative to the fitted surface.
+    Sv ('v' for "valley") is the absolute value of the most-negative residual relative to the fitted surface.
 
     ASSUMES x- and y-spacings are (possibly different) CONSTANTS.
 
