@@ -30,10 +30,9 @@ pip-install this repository into a suitable virtual environment:
 Usage
 -----
 
-Import `Path` and `nanovea_roughness`:
+Import the `nanovea_roughness` package:
 
 ```
->>> from pathlib import Path
 >>> import nanovea_roughness as nr
 ```
 
