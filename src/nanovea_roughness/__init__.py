@@ -34,4 +34,5 @@ from nanovea_roughness.core import (
     Sq_calc as Sq,
     Sv_calc as Sv,
     Sz_calc as Sz,
+    zdata_from_scanpath,
 )

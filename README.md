@@ -40,7 +40,7 @@ Import `Path` and `nanovea_roughness`:
 Import the data from a scan datafile:
 
 ```
->>> data = nr.nanovea_data_from_scanpath(Path("test.txt"))
+>>> data = nr.nanovea_data_from_scanpath("test.txt")
 >>> data
 {<NanoveaData.Filename: 'fname'>: 'test.txt', <NanoveaData.Counts: 'counts'>: [101, 101], <NanoveaData.Incs: 'incs'>: [0.005, 0.005], <NanoveaData.ZData: 'zdata'>: array([[218.4546, 219.1168, 222.2589, ..., 270.6953, 271.7816, 272.0135],
        [207.6688, 207.887 , 211.8543, ..., 261.9275, 263.4182, 264.2017],
@@ -51,13 +51,29 @@ Import the data from a scan datafile:
        [231.4407, 231.9086, 233.7686, ..., 277.9236, 277.1981, 277.3815]])}
 ```
 
+The path to the data file can be provided either as a string, or as a
+[`pathlib.Path`](https://docs.python.org/3/library/pathlib.html#pathlib.Path).
+
 All that's needed for the roughness calculations is the z-data array
 (though the `data` dict also provides information on the 
-x/y grid dimensions and point spacings):
+x/y grid dimensions and point spacings, as shown above):
 
 ```
 >>> arr = data[nr.NanoveaData.ZData]
 >>> arr
+array([[218.4546, 219.1168, 222.2589, ..., 270.6953, 271.7816, 272.0135],
+       [207.6688, 207.887 , 211.8543, ..., 261.9275, 263.4182, 264.2017],
+       [208.7452, 208.8223, 216.0127, ..., 264.4853, 266.1218, 266.8536],
+       ...,
+       [231.2596, 231.1892, 232.7189, ..., 278.799 , 277.9822, 276.8931],
+       [231.4105, 231.8307, 231.9724, ..., 278.7672, 277.8636, 277.7744],
+       [231.4407, 231.9086, 233.7686, ..., 277.9236, 277.1981, 277.3815]])
+```
+
+A helper function is provided to retrieve just the z-data array:
+
+```
+>>> nr.zdata_from_scanpath("test.txt")
 array([[218.4546, 219.1168, 222.2589, ..., 270.6953, 271.7816, 272.0135],
        [207.6688, 207.887 , 211.8543, ..., 261.9275, 263.4182, 264.2017],
        [208.7452, 208.8223, 216.0127, ..., 264.4853, 266.1218, 266.8536],

@@ -29,6 +29,7 @@ data exports.
 import csv
 import itertools as itt
 from enum import Enum
+from pathlib import Path
 
 import numpy as np
 from scipy.integrate import simps
@@ -47,8 +48,17 @@ class NanoveaData(Enum):
     ZData = "zdata"
 
 
+def zdata_from_scanpath(fpath):
+    """Return just the z-data from a Nanovea scan file."""
+    return nanovea_data_from_scanpath(fpath)[NanoveaData.ZData]
+
+
 def nanovea_data_from_scanpath(fpath):
     """Load a Nanovea data file and return structured contents."""
+    # If passed as a string, this Path-ifies it. If passed as a
+    # Path, this should be a no-op.
+    fpath = Path(fpath)
+
     with fpath.open("r") as f:
         # Create a CSV reader from the indicated file.
         csvr = csv.reader(f)
