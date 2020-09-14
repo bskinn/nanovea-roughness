@@ -74,3 +74,15 @@ to obtain the roughness metric of interest:
 >>> nr.Sa(arr)
 9.340576069231256
 ```
+
+Administrative
+-------
+
+Source on [GitHub](https://github.com/bskinn/nanovea-roughness).  Bug reports
+and feature requests are welcomed at the
+[Issues](https://github.com/bskinn/nanovea-roughness/issues) page there.
+
+Copyright (c) Brian Skinn 2020
+
+License: The MIT License. See [LICENSE.txt](https://github.com/bskinn/nanovea-roughness/blob/master/LICENSE.txt)
+for full license terms.
