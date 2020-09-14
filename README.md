@@ -14,9 +14,10 @@ data is generated in a standard fashion, which is accounted for by the
 `nanovea_data_from_scanpath` method.
 
 This analysis is meant for scans covering relatively small areas of a workpiece
-(~50-100 um on each side) at a relatively high point density (scan steps of
-0.5-2.0 um), where topography at macroscopic and waviness length scales
-can safely be neglected and a planar reference surface is appropriate.
+(~50-100 um along each side of the scan area) at a relatively high point density
+(scan steps of 0.5-2.0 um), where topography at macroscopic and waviness length scales
+can safely be neglected and a planar reference surface is appropriate for the
+roughness calculation.
 
 Installation
 -------
