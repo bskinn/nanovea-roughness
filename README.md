@@ -1,19 +1,76 @@
 Nanovea ST-400 Surface Roughness Calculator
 ===================
 
-*(to be completed)*
+The [Nanovea ST-400](https://nanovea.com/instruments/st400/) is a non-contact optical profilometer that
+measures the topography of workpiece surfaces as a two-dimensional array of heights.
+While the software shipped with the instrument for analysis of the resulting
+profile data is highly capable in many regards, its algorithms for calculating
+two-dimensional roughness metrics have been found to be incorrect.
 
-----
+The purpose of this repository and `nanovea_roughness` Python package is
+to provide a tool to easily and correctly carry out calculation of these
+2-D roughness metrics, starting from scan data exported as text. The exported
+data is generated in a standard fashion, which is accounted for by the
+`nanovea_data_from_scanpath` method.
 
-Command to create the shiv zipapp (sub whatever python version):
+This analysis is meant for scans covering relatively small areas of a workpiece
+(~50-100 um on each side) at a relatively high point density (scan steps of
+0.5-2.0 um), where topography at macroscopic and waviness length scales
+can safely be neglected and a planar reference surface is appropriate.
+
+Installation
+-------
+
+pip-install this repository into a suitable virtual environment:
 
 ```
-python3.7 -m shiv -c nanovea-roughness -o dist/nanovea_roughness_3.7.shiv .
+(env) $ pip install git+https://github.com/bskinn/nanovea-roughness
 ```
 
-Selector within the batch runner:
+Usage
+-----
+
+Import `Path` and `nanovea_roughness`:
 
 ```
-python -c "import sys; sys.exit(0 if sys.version_info[:2] == (3, 6) else 1)"
-IF %ERRORLEVEL% EQU 0 (call python nanovea_roughness_3.6.shiv)
+>>> from pathlib import Path
+>>> import nanovea_roughness as nr
+```
+
+Import the data from a scan datafile:
+
+```
+>>> data = nr.nanovea_data_from_scanpath(Path("test.txt"))
+>>> data
+{<NanoveaData.Filename: 'fname'>: 'test.txt', <NanoveaData.Counts: 'counts'>: [101, 101], <NanoveaData.Incs: 'incs'>: [0.005, 0.005], <NanoveaData.ZData: 'zdata'>: array([[218.4546, 219.1168, 222.2589, ..., 270.6953, 271.7816, 272.0135],
+       [207.6688, 207.887 , 211.8543, ..., 261.9275, 263.4182, 264.2017],
+       [208.7452, 208.8223, 216.0127, ..., 264.4853, 266.1218, 266.8536],
+       ...,
+       [231.2596, 231.1892, 232.7189, ..., 278.799 , 277.9822, 276.8931],
+       [231.4105, 231.8307, 231.9724, ..., 278.7672, 277.8636, 277.7744],
+       [231.4407, 231.9086, 233.7686, ..., 277.9236, 277.1981, 277.3815]])}
+```
+
+All that's needed for the roughness calculations is the z-data array
+(though the `data` dict also provides information on the 
+x/y grid dimensions and point spacings):
+
+```
+>>> arr = data[nr.NanoveaData.ZData]
+>>> arr
+array([[218.4546, 219.1168, 222.2589, ..., 270.6953, 271.7816, 272.0135],
+       [207.6688, 207.887 , 211.8543, ..., 261.9275, 263.4182, 264.2017],
+       [208.7452, 208.8223, 216.0127, ..., 264.4853, 266.1218, 266.8536],
+       ...,
+       [231.2596, 231.1892, 232.7189, ..., 278.799 , 277.9822, 276.8931],
+       [231.4105, 231.8307, 231.9724, ..., 278.7672, 277.8636, 277.7744],
+       [231.4407, 231.9086, 233.7686, ..., 277.9236, 277.1981, 277.3815]])
+```
+
+`arr` can then be fed into the appropriate `S{}` function in order
+to obtain the roughness metric of interest:
+
+```
+>>> nr.Sa(arr)
+9.340576069231256
 ```
