@@ -17,7 +17,7 @@ data exports.
     http://www.github.com/bskinn/nanovea-roughness
 
 **Documentation**
-    http://sphobjinv.readthedocs.io
+    *(pending)*
 
 **License**
     The MIT License; see |license_txt|_ for full license terms
