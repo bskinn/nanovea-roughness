@@ -13,11 +13,17 @@ to provide a tool to easily and correctly carry out calculation of these
 data is generated in a standard fashion, which is accounted for by the
 `nanovea_data_from_scanpath` method.
 
+Alternatively, if surface data is available from another source, that data
+can be used by converting it into a `numpy.ndarray` by whatever suitable means.
+
 This analysis is meant for scans covering relatively small areas of a workpiece
 (~50-100 um along each side of the scan area) at a relatively high point density
 (scan steps of 0.5-2.0 um), where topography at macroscopic and waviness length scales
 can safely be neglected and a planar reference surface is appropriate for the
-roughness calculation.
+roughness calculation. Note that in order for determination of the planar
+reference surface to work correctly, the *x* and *y* steps
+***must be uniform*** across the full scan area, though it is fine if
+the *x* and *y* steps differ from each other.
 
 Installation
 -------
@@ -37,7 +43,7 @@ Import the `nanovea_roughness` package:
 >>> import nanovea_roughness as nr
 ```
 
-Import the data from a scan datafile:
+Import the data from a scan datafile (the required data format can be seen [here](https://github.com/bskinn/nanovea-roughness/blob/master/test_data/test1.txt)):
 
 ```
 >>> data = nr.nanovea_data_from_scanpath("test.txt")
